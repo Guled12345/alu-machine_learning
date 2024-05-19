@@ -1,23 +1,19 @@
 #!/usr/bin/env python3
-"""Adds two arrays element wise"""
+'''
+The script contains a function that adds two arrays element wise.
+'''
 
 
 def add_arrays(arr1, arr2):
-    """
-    Adds two arrays element wise
-
-    Args:
-        arr1, arr2
-
-    Returns:
-        list: A new 2D list representing the sum of two arrays.
-
-    """
+    '''
+        The function that adds two arrays element wise.
+        arr1: The first array
+        arr2: The second array
+        Returns: A list containing sums of arr1 & arr2.
+        If not same shape returns none.
+    '''
     if len(arr1) != len(arr2):
         return None
-    else:
-        result = []
-        for i in range(len(arr1)):
-            result.append(arr1[i] + arr2[i])
-        return result
-    
+
+    # Element wise addition using list comprehension
+    return [a + b for a, b in zip(arr1, arr2)]
