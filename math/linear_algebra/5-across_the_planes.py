@@ -1,26 +1,29 @@
+
 #!/usr/bin/env python3
-"""Adds matrices element wise"""
+
+'''
+    This script contains a function that adds matrices element wise.
+'''
 
 
 def add_matrices2D(mat1, mat2):
-    """
-    Adds two matrices  element wise
-
-    Args:
-        mat1, mat2
-
-    Returns:
-        list: A new 2D list representing the sum of two matrices.
-
-    """
-    if len(mat1[0]) != len(mat2[0]):
+    '''
+        This function adds matrices element wise.
+        mat1: The first matrix
+        mat2: The second matrix
+        Returns: A new matrix and
+        None if the matrices are not of the same shape.
+    '''
+    if len(mat1) != len(mat2):
         return None
-    else:
-        result = []
-        for i in range(len(mat1)):
-            row = []
-            for j in range(len(mat1[0])):
-                row.append(mat1[i][j] + mat2[i][j])
-            result.append(row)
-        return result
+
+    for row1, row2 in zip(mat1, mat2):
+        if len(row1) != len(row2):
+            return None
+
+# Creating a new matrix with the element wise sums.
+    return[[a + b for a, b in zip(row1, row2)]
+           for row1, row2 in zip(mat1, mat2)]
+    
+    
     
