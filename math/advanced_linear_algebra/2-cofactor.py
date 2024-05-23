@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-this module has the function cofactor(matrix)
+This module has the function cofactor(matrix)
 """
 
 minor = __import__('1-minor').minor
@@ -9,11 +9,8 @@ minor = __import__('1-minor').minor
 
 def cofactor(matrix):
     """
-    calculate the minor of a matrix
+    Calculate the cofactor of a matrix
     """
-
-    # if len(matrix) < 1:
-    #     raise TypeError('matrix must be a list of lists')
     if not isinstance(matrix, list) or not all(isinstance(row, list)
                                                for row in matrix):
         raise TypeError('matrix must be a list of lists')
@@ -27,15 +24,15 @@ def cofactor(matrix):
     elif len(matrix) == 2:
         return [[matrix[1][1], -matrix[1][0]], [-matrix[0][1], matrix[0][0]]]
     elif len(matrix) == 3:
-        a = (matrix[1][1]*matrix[2][2]) - (matrix[1][2]*matrix[2][1])
-        b = (matrix[1][0]*matrix[2][2]) - (matrix[1][2]*matrix[2][0])
-        c = (matrix[1][0]*matrix[2][1]) - (matrix[1][1]*matrix[2][0])
-        d = (matrix[0][1]*matrix[2][2]) - (matrix[0][2]*matrix[2][1])
-        e = (matrix[0][0]*matrix[2][2]) - (matrix[0][2]*matrix[2][0])
-        f = (matrix[0][0]*matrix[2][1]) - (matrix[0][1]*matrix[2][0])
-        g = (matrix[0][1]*matrix[1][2]) - (matrix[0][2]*matrix[1][1])
-        h = (matrix[0][0]*matrix[1][2]) - (matrix[0][2]*matrix[1][0])
-        i = (matrix[0][0]*matrix[1][1]) - (matrix[0][1]*matrix[1][0])
+        a = (matrix[1][1] * matrix[2][2]) - (matrix[1][2] * matrix[2][1])
+        b = (matrix[1][0] * matrix[2][2]) - (matrix[1][2] * matrix[2][0])
+        c = (matrix[1][0] * matrix[2][1]) - (matrix[1][1] * matrix[2][0])
+        d = (matrix[0][1] * matrix[2][2]) - (matrix[0][2] * matrix[2][1])
+        e = (matrix[0][0] * matrix[2][2]) - (matrix[0][2] * matrix[2][0])
+        f = (matrix[0][0] * matrix[2][1]) - (matrix[0][1] * matrix[2][0])
+        g = (matrix[0][1] * matrix[1][2]) - (matrix[0][2] * matrix[1][1])
+        h = (matrix[0][0] * matrix[1][2]) - (matrix[0][2] * matrix[1][0])
+        i = (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0])
         result = [[a, -b, c], [-d, e, -f], [g, -h, i]]
         return result
     else:
@@ -54,4 +51,3 @@ def cofactor(matrix):
             cofactor_mat.append(cofactor_row)
 
         return cofactor_mat
-    
