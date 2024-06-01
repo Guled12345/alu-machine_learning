@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Writing a function that performs summation"""
 
+
 def summation_i_squared(n):
     """Function that sums values of i ** 2"""
 
@@ -11,4 +12,3 @@ def summation_i_squared(n):
     else:
         result = (n*(n+1)*(2*n+1))//6
         return result
-
