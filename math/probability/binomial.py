@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Create a class Binomial that represents a binomial distribution
-"""
+"""Create a class Binomial that represents a binomial distribution"""
 
 
 class Binomial:
@@ -56,4 +55,3 @@ class Binomial:
         if k < 0:
             return 0
         return sum([self.pmf(i) for i in range(0, k+1)])
-    
