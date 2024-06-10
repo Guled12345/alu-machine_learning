@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Creating a class that represents a poisson distribution."""
 
-
 class Poisson:
     """Creating the Poisson class
     """
@@ -27,7 +26,7 @@ class Poisson:
     def factorial(self, k):
         """Obtaining the factorial of a number."""
         result = 1
-        for i in range(1, k+1):
+        for i in range(1, k + 1):
             result = result * i
         return result
 
@@ -51,9 +50,8 @@ class Poisson:
             return 0
 
         def p(k):
-
             p = (self.lambtha ** k) * (self.E ** -
                                        self.lambtha) / self.factorial(k)
             return p
-        return sum([p(k) for k in range(0, k+1)])
-    
+
+        return sum([p(k) for k in range(0, k + 1)])
