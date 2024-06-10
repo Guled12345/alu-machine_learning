@@ -40,4 +40,3 @@ class Exponential:
             return 0
 
         return (1 - (self.E ** -(self.lambtha * x)))
-    
