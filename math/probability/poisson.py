@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Creating a class that represents a poisson distribution."""
 
+
 class Poisson:
     """Creating the Poisson class
     """
