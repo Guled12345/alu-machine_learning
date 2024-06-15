@@ -2,9 +2,7 @@
 
 '''Importing numpy'''
 
-
 import numpy as np
-
 
 class MultiNormal:
     """
@@ -59,4 +57,3 @@ class MultiNormal:
         pdf_value = norm_factor * np.exp(exponent)
 
         return float(pdf_value)
-    
