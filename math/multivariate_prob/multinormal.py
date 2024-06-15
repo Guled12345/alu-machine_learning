@@ -48,7 +48,7 @@ class MultiNormal:
 
         if x.shape != (d, 1):
             raise ValueError("x must have the shape ({}, 1)".format(d))
-            
+
         det_cov = np.linalg.det(self.cov)
         cov_inv = np.linalg.inv(self.cov)
         norm_factor = 1 / np.sqrt((2 * np.pi) ** d * det_cov)
