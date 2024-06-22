@@ -2,7 +2,7 @@
 
 """
 A module containing a function that
-calculates the marginal probability
+calculates the marginal probability.
 """
 
 import numpy as np
