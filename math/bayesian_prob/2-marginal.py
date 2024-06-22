@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 
 """
@@ -12,25 +11,25 @@ likelihood = __import__('0-likelihood').likelihood
 
 def marginal(x, n, P, Pr):
     """
-    calculates the marginal probability of
-    obtaining the data
+    Calculates the marginal probability of
+    obtaining the data.
 
-    x- number of patients that develop side effects
-    n- total number of patients observed
-    P- 1D numpy.ndarray containing the various hypothetical
-         probabilities of developing side effects
-    Pr- 1D numpy.ndarray containing the prior beliefs of P
+    Parameters:
+    x (int): Number of patients that develop side effects
+    n (int): Total number of patients observed
+    P (np.ndarray): 1D numpy.ndarray containing the various hypothetical
+                    probabilities of developing side effects
+    Pr (np.ndarray): 1D numpy.ndarray containing the prior beliefs of P
 
-    Returns: the marginal probability of obtaining x and n
+    Returns:
+    float: The marginal probability of obtaining x and n
     """
 
     if not isinstance(n, int) or n <= 0:
-        raise ValueError(
-            "n must be a positive integer")
+        raise ValueError("n must be a positive integer")
 
     if not isinstance(x, int) or x < 0:
-        raise ValueError(
-            "x must be an integer that is greater than or equal to 0")
+        raise ValueError("x must be an integer that is greater than or equal to 0")
 
     if x > n:
         raise ValueError("x cannot be greater than n")
@@ -53,11 +52,11 @@ def marginal(x, n, P, Pr):
     if not np.isclose(np.sum(Pr), 1):
         raise ValueError("Pr must sum to 1")
 
-    #  formula for marginal probability:
-    # # P(X/N) = P(N/X) * P(X) / P(N)
-    #  P(N/X) = likelihood
-    #  P(X) = Pr
-    #  P(N) = marginal probability
-    #  P(N) = sum(likelihood * Pr)
+    # Formula for marginal probability:
+    # P(X/N) = P(N/X) * P(X) / P(N)
+    # P(N/X) = likelihood
+    # P(X) = Pr
+    # P(N) = marginal probability
+    # P(N) = sum(likelihood * Pr)
 
     return np.sum(likelihood(x, n, P) * Pr)
