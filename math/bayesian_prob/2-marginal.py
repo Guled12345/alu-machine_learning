@@ -6,6 +6,7 @@ of obtaining the data.
 
 import numpy as np
 
+
 def marginal(x, n, P, Pr):
     """
     Calculates the marginal probability of obtaining the data.
@@ -39,15 +40,15 @@ def marginal(x, n, P, Pr):
             raise ValueError("All values in Pr must be in the range [0, 1]")
     if np.isclose([np.sum(Pr)], [1]) == [False]:
         raise ValueError("Pr must sum to 1")
-    
+
     # likelihood
     factorial = np.math.factorial
     fact_coeff = factorial(n) / (factorial(n - x) * factorial(x))
     likelihood = fact_coeff * (P ** x) * ((1 - P) ** (n - x))
-    
+
     # intersection = likelihood * priors
     intersection = likelihood * Pr
-    
+
     # marginal probability
     marginal = np.sum(intersection)
     return marginal
