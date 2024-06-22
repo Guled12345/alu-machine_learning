@@ -1,26 +1,31 @@
 #!/usr/bin/env python3
 """
 Function that calculates the marginal probability
-of obtaining the data
+of obtaining the data.
 """
-
 
 import numpy as np
 
-
 def marginal(x, n, P, Pr):
     """
-        x: number of patients that develop severe side effects
-        n: total number of patients observed
-        P: containing the various hypothetical probabilities
-            of developing severe side effects
-        Pr: containing the prior beliefs of P
+    Calculates the marginal probability of obtaining the data.
+
+    Parameters:
+    x (int): Number of patients that develop severe side effects.
+    n (int): Total number of patients observed.
+    P (np.ndarray): Array containing the various hypothetical probabilities
+                    of developing severe side effects.
+    Pr (np.ndarray): Array containing the prior beliefs of P.
+
+    Returns:
+    float: The marginal probability of obtaining x and n.
     """
     if type(n) is not int or n <= 0:
         raise ValueError("n must be a positive integer")
     if type(x) is not int or x < 0:
         raise ValueError(
-            "x must be an integer that is greater than or equal to 0")
+            "x must be an integer that is greater than or equal to 0"
+        )
     if x > n:
         raise ValueError("x cannot be greater than n")
     if type(P) is not np.ndarray or len(P.shape) != 1:
@@ -32,14 +37,17 @@ def marginal(x, n, P, Pr):
             raise ValueError("All values in P must be in the range [0, 1]")
         if Pr[value] > 1 or Pr[value] < 0:
             raise ValueError("All values in Pr must be in the range [0, 1]")
-    if np.isclose([np.sum(Pr)], [1]) == [False]:
+    if not np.isclose(np.sum(Pr), 1):
         raise ValueError("Pr must sum to 1")
+    
     # likelihood
     factorial = np.math.factorial
     fact_coeff = factorial(n) / (factorial(n - x) * factorial(x))
     likelihood = fact_coeff * (P ** x) * ((1 - P) ** (n - x))
+    
     # intersection = likelihood * priors
     intersection = likelihood * Pr
+    
     # marginal probability
     marginal = np.sum(intersection)
     return marginal
