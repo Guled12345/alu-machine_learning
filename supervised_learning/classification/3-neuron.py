@@ -70,3 +70,18 @@ class Neuron:
         sigmoid = 1 / (1 + np.exp(-Z))
         self.__A = sigmoid
         return self.__A
+
+    def cost(self, Y, A):
+        """
+        Calculates the cost using logistic regression.
+
+        Args:
+            Y: numpy.ndarray - The correct labels for the input data.
+            A: numpy.ndarray - The activated output of the neuron.
+
+        Returns:
+            float: The cost value.
+        """
+        m = Y.shape[1]
+        cost = -(1 / m) * np.sum(Y * np.log(A) + (1 - Y) * np.log(1 - A))
+        return cost
