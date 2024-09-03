@@ -83,7 +83,7 @@ class Neuron:
             float: The cost value.
         """
         m = Y.shape[1]
-        # Avoid log(0) by clipping A to be within a small range
-        A = np.clip(A, 1e-10, 1 - 1e-10)
-        cost = -(1 / m) * np.sum(Y * np.log(A) + (1 - Y) * np.log(1 - A))
+        # Clip A to avoid log(0) issues
+        A_clipped = np.clip(A, 1e-10, 1 - 1e-10)
+        cost = -(1 / m) * np.sum(Y * np.log(A_clipped) + (1 - Y) * np.log(1 - A_clipped))
         return cost
