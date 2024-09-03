@@ -40,17 +40,9 @@ class Neuron:
     def W(self):
         return self.__W
 
-    @W.setter
-    def W(self, value):
-        self.__W = value
-
     @property
     def b(self):
         return self.__b
-
-    @b.setter
-    def b(self, value):
-        self.__b = value
 
     @property
     def A(self):
@@ -66,9 +58,8 @@ class Neuron:
         Returns:
         numpy.ndarray - The activated output of the neuron.
         """
-        Z = np.dot(self.W, X) + self.b
-        sigmoid = 1 / (1 + np.exp(-Z))
-        self.__A = sigmoid
+        Z = np.dot(self.__W, X) + self.__b
+        self.__A = 1 / (1 + np.exp(-Z))
         return self.__A
 
     def cost(self, Y, A):
@@ -82,11 +73,10 @@ class Neuron:
         Returns:
         float: Cross-entropy loss.
         """
+        m = Y.shape[1]
         A_clipped = np.clip(A, 1e-10, 1 - 1e-10)
-        cost = -(1 / Y.shape[1]) * np.sum(
-            Y * np.log(A_clipped) + (1 - Y) * np.log(1 - A_clipped)
-        )
-        return cost
+        cost = -(1 / m) * np.sum(Y * np.log(A_clipped) + (1 - Y) * np.log(1 - A_clipped))
+        return np.round(cost, 10)
 
     def evaluate(self, X, Y):
         """
@@ -101,7 +91,7 @@ class Neuron:
             - numpy.ndarray: Labelized predictions (0 or 1).
             - float: Cost of the model.
         """
-        class_prediction = self.forward_prop(X)
-        cost = self.cost(Y, class_prediction)
-        labelized = np.where(class_prediction < 0.5, 0, 1)
+        A = self.forward_prop(X)
+        cost = self.cost(Y, A)
+        labelized = np.where(A >= 0.5, 1, 0)
         return labelized, cost
