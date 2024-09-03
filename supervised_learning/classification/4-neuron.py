@@ -32,7 +32,7 @@ class Neuron:
         if nx < 1:
             raise ValueError('nx must be a positive integer')
         self.nx = nx
-        self.__W = np.random.normal(size=(1, nx))
+        self.__W = np.random.randn(1, nx)
         self.__b = 0
         self.__A = 0
 
@@ -74,9 +74,8 @@ class Neuron:
         float: Cross-entropy loss.
         """
         m = Y.shape[1]
-        A_clipped = np.clip(A, 1e-10, 1 - 1e-10)
-        cost = -(1 / m) * np.sum(Y * np.log(A_clipped) + (1 - Y) * np.log(1 - A_clipped))
-        return np.round(cost, 10)
+        cost = -(1 / m) * np.sum(Y * np.log(A) + (1 - Y) * np.log(1 - A))
+        return cost
 
     def evaluate(self, X, Y):
         """
@@ -93,5 +92,5 @@ class Neuron:
         """
         A = self.forward_prop(X)
         cost = self.cost(Y, A)
-        labelized = np.where(A >= 0.5, 1, 0)
-        return labelized, cost
+        predictions = np.where(A >= 0.5, 1, 0)
+        return predictions, cost
