@@ -2,8 +2,6 @@
 """
 Neural Class
 """
-
-
 import numpy as np
 
 
@@ -84,10 +82,10 @@ class Neuron:
         Returns:
         float: Cross-entropy loss.
         """
-        log_loss_arr = -(Y)*np.log(A) - (1-Y)*np.log(1.0000001-A)
-        sum = np.sum(log_loss_arr)
-        length = log_loss_arr.size
-        cost = sum / length
+        A_clipped = np.clip(A, 1e-10, 1 - 1e-10)
+        cost = -(1 / Y.shape[1]) * np.sum(
+            Y * np.log(A_clipped) + (1 - Y) * np.log(1 - A_clipped)
+        )
         return cost
 
     def evaluate(self, X, Y):
@@ -99,12 +97,11 @@ class Neuron:
         Y (numpy array): Ground truth labels, shape (1, m).
 
         Returns:
-        str: A formatted string containing labelized predictions and cost.
+        tuple: A tuple containing:
+            - numpy.ndarray: Labelized predictions (0 or 1).
+            - float: Cost of the model.
         """
         class_prediction = self.forward_prop(X)
         cost = self.cost(Y, class_prediction)
-        # Labelize the predictions:
-        # if prediction < 0.5, set to 0; else, set to 1
         labelized = np.where(class_prediction < 0.5, 0, 1)
-        return (labelized, cost)
-    
+        return labelized, cost
