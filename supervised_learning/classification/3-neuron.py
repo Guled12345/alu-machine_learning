@@ -85,5 +85,7 @@ class Neuron:
         m = Y.shape[1]
         # Clip A to avoid log(0) issues
         A_clipped = np.clip(A, 1e-10, 1 - 1e-10)
-        cost = -(1 / m) * np.sum(Y * np.log(A_clipped) + (1 - Y) * np.log(1 - A_clipped))
+        cost = -(1 / m) * np.sum(
+            Y * np.log(A_clipped) + (1 - Y) * np.log(1 - A_clipped)
+        )
         return cost
