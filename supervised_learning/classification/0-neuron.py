@@ -2,10 +2,7 @@
 """
 Neural Class
 """
-
-
 import numpy as np
-
 
 class Neuron:
     """
