@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""creating a deep neural network"""
-
+"""Creating a deep neural network"""
 
 import numpy as np
 
 
 class DeepNeuralNetwork:
-    """deep nn"""
+    """Deep neural network"""
+    
     def __init__(self, nx, layers):
         if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
@@ -36,4 +36,3 @@ class DeepNeuralNetwork:
 
             # Zero initialization
             self.weights['b' + str(i + 1)] = np.zeros((layers[i], 1))
-            
