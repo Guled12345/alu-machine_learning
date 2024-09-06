@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""creating a deep neural network"""
-
+"""Creating a deep neural network"""
 
 import numpy as np
 
 
 class DeepNeuralNetwork:
-    """deep nn"""
+    """Deep neural network"""
+
     def __init__(self, nx, layers):
         if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
@@ -39,16 +39,15 @@ class DeepNeuralNetwork:
 
     @property
     def L(self):
-        """number of layers in the neural network"""
+        """Number of layers in the neural network"""
         return self.__L
 
     @property
     def cache(self):
-        """intermediary values of the network"""
+        """Intermediary values of the network"""
         return self.__cache
 
     @property
     def weights(self):
-        """hold all weights"""
+        """Hold all weights"""
         return self.__weights
-    
