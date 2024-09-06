@@ -1,21 +1,20 @@
 #!/usr/bin/env python3
 '''
-    A class NeuralNetwork that defines a neural network
-    with one hidden layer performing binary classification
+A class NeuralNetwork that defines a neural network
+with one hidden layer performing binary classification
 '''
-
 
 import numpy as np
 
 
 class NeuralNetwork:
     '''
-        A class NeuralNetwork
+    A class NeuralNetwork
     '''
 
     def __init__(self, nx, nodes):
         '''
-            class constructor
+        Class constructor
         '''
         if type(nx) is not int:
             raise TypeError('nx must be an integer')
@@ -41,42 +40,41 @@ class NeuralNetwork:
     @property
     def W1(self):
         '''
-            Getter
+        Getter for W1
         '''
         return self.__W1
 
     @property
     def b1(self):
         '''
-            Getter
+        Getter for b1
         '''
         return self.__b1
 
     @property
     def A1(self):
         '''
-            Getter
+        Getter for A1
         '''
         return self.__A1
 
     @property
     def W2(self):
         '''
-            Getter
+        Getter for W2
         '''
         return self.__W2
 
     @property
     def b2(self):
         '''
-            Getter
+        Getter for b2
         '''
         return self.__b2
 
     @property
     def A2(self):
         '''
-            Getter
+        Getter for A2
         '''
         return self.__A2
-    
