@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""creating a deep neural network"""
-
+"""Creating a deep neural network"""
 
 import numpy as np
 
 
 class DeepNeuralNetwork:
-    """deep nn"""
+    """Deep neural network"""
+
     def __init__(self, nx, layers):
         if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
@@ -39,34 +39,33 @@ class DeepNeuralNetwork:
 
     @property
     def L(self):
-        """number of layers in the neural network"""
+        """Number of layers in the neural network"""
         return self.__L
 
     @property
     def cache(self):
-        """intermediary values of the network"""
+        """Intermediary values of the network"""
         return self.__cache
 
     @property
     def weights(self):
-        """hold all weights"""
+        """Hold all weights"""
         return self.__weights
 
     def forward_prop(self, X):
-        """foward_prop of nn"""
-        self.cache["A0"] = X
-        for i in range(1, self.L+1):
-            W = self.weights['W'+str(i)]
-            b = self.weights['b'+str(i)]
-            A = self.cache['A'+str(i - 1)]
+        """Forward propagation of the neural network"""
+        self.__cache["A0"] = X
+        for i in range(1, self.__L + 1):
+            W = self.__weights['W' + str(i)]
+            b = self.__weights['b' + str(i)]
+            A = self.__cache['A' + str(i - 1)]
             z = np.matmul(W, A) + b
             sigmoid = 1 / (1 + np.exp(-z))
-            self.cache["A"+str(i)] = sigmoid
-        return self.cache["A"+str(i)], self.cache
+            self.__cache["A" + str(i)] = sigmoid
+        return self.__cache["A" + str(self.__L)], self.__cache
 
     def cost(self, Y, A):
-        """calculating cost"""
-        cost = - ((Y * np.log(A)) + (1 - Y) * np.log(1.0000001 - A))
+        """Calculate the cost"""
+        cost = -((Y * np.log(A)) + (1 - Y) * np.log(1.0000001 - A))
         mean_cost = np.mean(cost)
         return mean_cost
-    
