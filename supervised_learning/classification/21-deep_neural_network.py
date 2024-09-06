@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""creating a deep neural network"""
-
+"""Creating a deep neural network"""
 
 import numpy as np
 
 
 class DeepNeuralNetwork:
-    """deep nn"""
+    """Deep neural network"""
+
     def __init__(self, nx, layers):
         if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
@@ -39,51 +39,49 @@ class DeepNeuralNetwork:
 
     @property
     def L(self):
-        """number of layers in the neural network"""
+        """Number of layers in the neural network"""
         return self.__L
 
     @property
     def cache(self):
-        """intermediary values of the network"""
+        """Intermediary values of the network"""
         return self.__cache
 
     @property
     def weights(self):
-        """hold all weights"""
+        """Hold all weights"""
         return self.__weights
 
     def forward_prop(self, X):
-        """foward_prop of nn"""
-        self.cache["A0"] = X
-        for i in range(1, self.L+1):
-            W = self.weights['W'+str(i)]
-            b = self.weights['b'+str(i)]
-            A = self.cache['A'+str(i - 1)]
+        """Forward propagation of the neural network"""
+        self.__cache["A0"] = X
+        for i in range(1, self.__L + 1):
+            W = self.__weights['W' + str(i)]
+            b = self.__weights['b' + str(i)]
+            A = self.__cache['A' + str(i - 1)]
             z = np.matmul(W, A) + b
             sigmoid = 1 / (1 + np.exp(-z))
-            self.cache["A"+str(i)] = sigmoid
-        return self.cache["A"+str(i)], self.cache
+            self.__cache["A" + str(i)] = sigmoid
+        return self.__cache["A" + str(self.__L)], self.__cache
 
     def cost(self, Y, A):
-        """calculating cost"""
+        """Calculate the cost"""
         cost = - ((Y * np.log(A)) + (1 - Y) * np.log(1.0000001 - A))
         mean_cost = np.mean(cost)
         return mean_cost
 
     def evaluate(self, X, Y):
-        """evaluate"""
-        predict = self.forward_prop(X)
-        output = self.cache.get("A" + str(self.L))
+        """Evaluate the neural network"""
+        output, _ = self.forward_prop(X)
         cost = self.cost(Y, output)
         predict = np.where(output >= 0.5, 1, 0)
-        return (predict, cost)
+        return predict, cost
 
     def gradient_descent(self, Y, cache, alpha=0.05):
-        """grad_descent"""
+        """Perform gradient descent"""
         m = Y.shape[1]
 
-        for i in range(self.L, 0, -1):
-
+        for i in range(self.__L, 0, -1):
             A_prev = cache["A" + str(i - 1)]
             A = cache["A" + str(i)]
             W = self.__weights["W" + str(i)]
@@ -95,6 +93,5 @@ class DeepNeuralNetwork:
             db = dz.mean(axis=1, keepdims=True)
             dw = np.matmul(dz, A_prev.T) / m
             da = np.matmul(W.T, dz)
-            self.__weights['W' + str(i)] -= (alpha * dw)
-            self.__weights['b' + str(i)] -= (alpha * db)
-            
+            self.__weights['W' + str(i)] -= alpha * dw
+            self.__weights['b' + str(i)] -= alpha * db
