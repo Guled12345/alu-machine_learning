@@ -2,6 +2,8 @@
 """
 Neural Class
 """
+
+
 import numpy as np
 
 
@@ -66,26 +68,7 @@ class Neuron:
         Returns:
         numpy.ndarray - The activated output of the neuron.
         """
-        Z = np.matmul(self.W, X) + self.b
         sigmoid = 1 / (1 + np.exp(-Z))
         self.__A = sigmoid
         return self.__A
-
-    def cost(self, Y, A):
-        """
-        Calculates the cost using logistic regression.
-
-        Args:
-            Y: numpy.ndarray - The correct labels for the input data.
-            A: numpy.ndarray - The activated output of the neuron.
-
-        Returns:
-            float: The cost value.
-        """
-        m = Y.shape[1]
-        # Clip A to avoid log(0) issues
-        A_clipped = np.clip(A, 1e-10, 1 - 1e-10)
-        cost = -(1 / m) * np.sum(
-            Y * np.log(A_clipped) + (1 - Y) * np.log(1 - A_clipped)
-        )
-        return cost
+    
