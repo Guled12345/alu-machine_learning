@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""creating a deep neural network"""
-
+"""Creating a deep neural network"""
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,7 +7,7 @@ import pickle
 
 
 class DeepNeuralNetwork:
-    """deep nn"""
+    """Deep NN"""
     def __init__(self, nx, layers):
         if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
@@ -41,41 +40,41 @@ class DeepNeuralNetwork:
 
     @property
     def L(self):
-        """number of layers in the neural network"""
+        """Number of layers in the neural network"""
         return self.__L
 
     @property
     def cache(self):
-        """intermediary values of the network"""
+        """Intermediary values of the network"""
         return self.__cache
 
     @property
     def weights(self):
-        """hold all weights"""
+        """Hold all weights"""
         return self.__weights
 
     def forward_prop(self, X):
-        """foward_prop of nn"""
+        """Forward propagation of NN"""
         self.cache["A0"] = X
-        for i in range(1, self.L+1):
-            W = self.weights['W'+str(i)]
-            b = self.weights['b'+str(i)]
-            A = self.cache['A'+str(i - 1)]
+        for i in range(1, self.L + 1):
+            W = self.weights['W' + str(i)]
+            b = self.weights['b' + str(i)]
+            A = self.cache['A' + str(i - 1)]
             z = np.matmul(W, A) + b
             if i != self.L:
-                A = 1 / (1 + np.exp(-z))  # sigmoid fxn
+                A = 1 / (1 + np.exp(-z))  # Sigmoid function
             else:
-                A = np.exp(z) / np.sum(np.exp(z), axis=0)
-            self.cache["A"+str(i)] = A
-        return self.cache["A"+str(i)], self.cache
+                A = np.exp(z) / np.sum(np.exp(z), axis=0)  # Softmax function
+            self.cache["A" + str(i)] = A
+        return self.cache["A" + str(i)], self.cache
 
     def cost(self, Y, A):
-        """calculating cost"""
+        """Calculating cost"""
         cost = -np.sum(Y * np.log(A)) / Y.shape[1]
         return cost
 
     def evaluate(self, X, Y):
-        """evaluate"""
+        """Evaluate"""
         self.forward_prop(X)
         A = self.cache.get("A" + str(self.L))
         prediction = np.eye(A.shape[0])[np.argmax(A, axis=0)].T
@@ -83,11 +82,10 @@ class DeepNeuralNetwork:
         return prediction, cost
 
     def gradient_descent(self, Y, cache, alpha=0.05):
-        """grad_descent"""
+        """Gradient Descent"""
         m = Y.shape[1]
 
         for i in range(self.L, 0, -1):
-
             A_prev = cache["A" + str(i - 1)]
             A = cache["A" + str(i)]
             W = self.__weights["W" + str(i)]
@@ -102,9 +100,9 @@ class DeepNeuralNetwork:
             self.__weights['W' + str(i)] -= (alpha * dw)
             self.__weights['b' + str(i)] -= (alpha * db)
 
-    def train(self, X, Y, iterations=5000,
-              alpha=0.05, verbose=True, graph=True, step=100):
-        """train"""
+    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True,
+              graph=True, step=100):
+        """Train"""
         if not isinstance(iterations, int):
             raise TypeError('iterations must be an integer')
         if iterations < 1:
@@ -119,20 +117,19 @@ class DeepNeuralNetwork:
             self.forward_prop(X)
             self.gradient_descent(Y, self.cache, alpha)
             if verbose and i % step == 0:
-
-                cost = self.cost(Y, self.cache["A"+str(self.L)])
+                cost = self.cost(Y, self.cache["A" + str(self.L)])
                 costs.append(cost)
                 print('Cost after {} iterations: {}'.format(i, cost))
         if graph:
             plt.plot(np.arange(0, iterations, step), costs)
-            plt.xlabel('iteration')
-            plt.ylabel('cost')
+            plt.xlabel('Iteration')
+            plt.ylabel('Cost')
             plt.title('Training Cost')
             plt.show()
         return self.evaluate(X, Y)
 
     def save(self, filename):
-        """save as .pkl"""
+        """Save as .pkl"""
         if not filename.endswith(".pkl"):
             filename += ".pkl"
         with open(filename, 'wb') as f:
@@ -140,10 +137,9 @@ class DeepNeuralNetwork:
 
     @staticmethod
     def load(filename):
-        """load pickle file"""
+        """Load pickle file"""
         try:
             with open(filename, 'rb') as f:
                 return pickle.load(f)
         except FileNotFoundError:
             return None
-        
