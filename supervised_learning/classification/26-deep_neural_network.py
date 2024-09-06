@@ -29,11 +29,13 @@ class DeepNeuralNetwork:
             if i == 0:
                 # He-et-al initialization
                 self.__weights['W' + str(i + 1)] = np.random.randn(
-                    layers[i], nx) * np.sqrt(2 / nx)
+                    layers[i], nx
+                ) * np.sqrt(2 / nx)
             else:
                 # He-et-al initialization
                 self.__weights['W' + str(i + 1)] = np.random.randn(
-                    layers[i], layers[i - 1]) * np.sqrt(2 / layers[i - 1])
+                    layers[i], layers[i - 1]
+                ) * np.sqrt(2 / layers[i - 1])
 
             # Zero initialization
             self.__weights['b' + str(i + 1)] = np.zeros((layers[i], 1))
@@ -98,7 +100,8 @@ class DeepNeuralNetwork:
             self.__weights['W' + str(i)] -= (alpha * dw)
             self.__weights['b' + str(i)] -= (alpha * db)
 
-    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
+    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True,
+              graph=True, step=100):
         """Train"""
         if not isinstance(iterations, int):
             raise TypeError('iterations must be an integer')
