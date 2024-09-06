@@ -1,31 +1,27 @@
 #!/usr/bin/env python3
 '''
-    A class NeuralNetwork that defines a neural network
-    with one hidden layer performing binary classification
+A class NeuralNetwork that defines a neural network
+with one hidden layer performing binary classification
 '''
-
 
 import numpy as np
 
 
 class NeuralNetwork:
     '''
-        A class NeuralNetwork
+    A class NeuralNetwork
     '''
 
     def __init__(self, nx, nodes):
         '''
-            class constructor
+        Class constructor
         '''
         if type(nx) is not int:
             raise TypeError('nx must be an integer')
-
         if nx < 1:
             raise ValueError('nx must be a positive integer')
-
         if type(nodes) is not int:
             raise TypeError('nodes must be an integer')
-
         if nodes < 1:
             raise ValueError('nodes must be a positive integer')
 
@@ -41,48 +37,48 @@ class NeuralNetwork:
     @property
     def W1(self):
         '''
-            Getter
+        Getter for W1
         '''
         return self.__W1
 
     @property
     def b1(self):
         '''
-            Getter
+        Getter for b1
         '''
         return self.__b1
 
     @property
     def A1(self):
         '''
-            Getter
+        Getter for A1
         '''
         return self.__A1
 
     @property
     def W2(self):
         '''
-            Getter
+        Getter for W2
         '''
         return self.__W2
 
     @property
     def b2(self):
         '''
-            Getter
+        Getter for b2
         '''
         return self.__b2
 
     @property
     def A2(self):
         '''
-            Getter
+        Getter for A2
         '''
         return self.__A2
 
     def forward_prop(self, X):
         '''
-            Calculates the forward propagation of the neural network
+        Calculates the forward propagation of the neural network
         '''
         self.__A1 = np.matmul(self.__W1, X) + self.__b1
         self.__A1 = 1 / (1 + np.exp(-self.__A1))
@@ -92,7 +88,7 @@ class NeuralNetwork:
 
     def cost(self, Y, A):
         '''
-            Calculates the cost of the model using logistic regression
+        Calculates the cost of the model using logistic regression
         '''
         m = Y.shape[1]
         cost = -np.sum((Y * np.log(A)) + ((1 - Y) * np.log(1.0000001 - A))) / m
@@ -100,10 +96,9 @@ class NeuralNetwork:
 
     def evaluate(self, X, Y):
         '''
-            Calculates the cost of the model using logistic regression
+        Evaluates the neural network's predictions
         '''
         A1, A2 = self.forward_prop(X)
         cost = self.cost(Y, A2)
         prediction = np.where(A2 >= 0.5, 1, 0)
         return prediction, cost
-    
