@@ -1,74 +1,63 @@
 #!/usr/bin/env python3
-"""
-Neural Class
-"""
+'''
+    A class Neuron that defines a single neuron performing
+    binary classification:
+'''
 
 
 import numpy as np
 
 
 class Neuron:
-    """
-    Neuron class represents a single neuron in a neural network.
-
-    Attributes:
-        nx (int): The number of input features.
-        W (ndarray): The weights vector for the neuron.
-        b (float): The bias for the neuron.
-        A (float): The activated output of the neuron (forward propagation).
-    """
-
+    '''
+        Class Neuron
+    '''
     def __init__(self, nx):
-        """
-        Initializes a neuron.
-
-        Args:
-            nx (int): The number of input features.
-
-        Raises:
-            TypeError: If nx is not an integer.
-            ValueError: If nx is not a positive integer.
-        """
-        if type(nx) != int:
+        '''
+            Constructor
+        '''
+        if type(nx) is not int:
             raise TypeError('nx must be an integer')
         if nx < 1:
             raise ValueError('nx must be a positive integer')
-        self.nx = nx
-        self.__W = np.random.normal(size=(1, nx))
+        self.__W = np.random.randn(1, nx)
         self.__b = 0
         self.__A = 0
 
     @property
     def W(self):
+        '''
+            Getter
+        '''
         return self.__W
-
-    @W.setter
-    def W(self, value):
-        self.__W = value
 
     @property
     def b(self):
+        '''
+            Getter
+        '''
         return self.__b
-
-    @b.setter
-    def b(self, value):
-        self.__b = value
 
     @property
     def A(self):
+        '''
+            Getter
+        '''
         return self.__A
 
     def forward_prop(self, X):
-        """
-        Forward propagates the input data through the neuron.
-
-        Arguments:
-        X: numpy.ndarray - Input data with shape (nx, m).
-
-        Returns:
-        numpy.ndarray - The activated output of the neuron.
-        """
-        sigmoid = 1 / (1 + np.exp(-Z))
-        self.__A = sigmoid
+        '''
+            Calculates the forward propagation of the neuron
+        '''
+        self.__A = 1 / (1 + np.exp(-np.dot(self.__W, X) - self.__b))
         return self.__A
+
+    def cost(self, Y, A):
+        '''
+            Calculates the cost of the model using logistic regression
+        '''
+        m = Y.shape[1]
+        cost = ((-1 / m) * np.sum(Y * np.log(A) + (1 - Y)
+                                  * np.log(1.0000001 - A)))
+        return cost
     
