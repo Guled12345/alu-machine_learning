@@ -4,7 +4,6 @@
     binary classification:
 '''
 
-
 import numpy as np
 
 
@@ -69,4 +68,3 @@ class Neuron:
         cost = self.cost(Y, A)
         prediction = np.where(A >= 0.5, 1, 0)
         return prediction, cost
-    
