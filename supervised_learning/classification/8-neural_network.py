@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-'''
-    A class NeuralNetwork that defines a neural network
-    with one hidden layer performing binary classification
-'''
 
+'''
+A class NeuralNetwork that defines a neural network
+with one hidden layer performing binary classification
+'''
 
 import numpy as np
 
 
 class NeuralNetwork:
     '''
-        A class NeuralNetwork
+    A class NeuralNetwork
     '''
 
     def __init__(self, nx, nodes):
         '''
-            class constructor
+        Class constructor
         '''
         if type(nx) is not int:
             raise TypeError('nx must be an integer')
@@ -37,4 +37,3 @@ class NeuralNetwork:
         self.W2 = np.random.randn(1, nodes)
         self.b2 = 0
         self.A2 = 0
-        
