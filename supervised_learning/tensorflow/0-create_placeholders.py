@@ -3,9 +3,7 @@
 Defines a function to return two placeholders for the neural network
 """
 
-
 import tensorflow as tf
-
 
 def create_placeholders(nx, classes):
     """
@@ -23,3 +21,4 @@ def create_placeholders(nx, classes):
     x = tf.placeholder("float", shape=(None, nx), name="x")
     y = tf.placeholder("float", shape=(None, classes), name="y")
     return x, y
+
