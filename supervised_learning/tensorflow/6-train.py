@@ -4,14 +4,12 @@ Defines a function that builds, trains, and saves
 neural network classifier
 """
 
-
 import tensorflow as tf
 calculate_accuracy = __import__('3-calculate_accuracy').calculate_accuracy
 calculate_loss = __import__('4-calculate_loss').calculate_loss
 create_placeholders = __import__('0-create_placeholders').create_placeholders
 create_train_op = __import__('5-create_train_op').create_train_op
 forward_prop = __import__('2-forward_prop').forward_prop
-
 
 def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
           alpha, iterations, save_path="/tmp/model.ckpt"):
@@ -21,7 +19,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     parameters:
         X_train [numpy.ndarray]: contains training input data
         Y_train [numpy.ndarray]: contains training labels
-        X_valid [numpy.adarray]: contains validation input data
+        X_valid [numpy.ndarray]: contains validation input data
         Y_valid [numpy.ndarray]: contains validation labels
         layer_sizes [list]: contains number of nodes in each layer of network
         activations [list]: contains activation functions for each layer
@@ -58,7 +56,7 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
                                   feed_dict={x: X_valid, y: Y_valid})
             accuracy_valid = sess.run(accuracy,
                                       feed_dict={x: X_valid, y: Y_valid})
-            if (i % 100) is 0:
+            if (i % 100) == 0:  # Fixed from "is" to "=="
                 print("After {} iterations:".format(i))
                 print("\tTraining Cost: {}".format(loss_train))
                 print("\tTraining Accuracy: {}".format(accuracy_train))
@@ -80,4 +78,3 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
         print("\tValidation Cost: {}".format(loss_valid))
         print("\tValidation Accuracy: {}".format(accuracy_valid))
         return saver.save(sess, save_path)
-    
