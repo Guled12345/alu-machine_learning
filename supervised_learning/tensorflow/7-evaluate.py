@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
-# Defines a function that evaluates output of
-# neural network classifier
+"""
+Defines a function that evaluates output of
+neural network classifier
+"""
 
 import tensorflow as tf
+
 
 def evaluate(X, Y, save_path):
     """
