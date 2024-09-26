@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-A function  that updates the weights of a neural network with Dropout
+A function that updates the weights of a neural network with Dropout
 regularization using gradient descent
 """
 import numpy as np
@@ -8,7 +8,7 @@ import numpy as np
 
 def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
     """
-    A function that upates the weights of a neural network with Dropout
+    A function that updates the weights of a neural network with Dropout
     regularization using gradient descent"""
     A2 = cache["A{}".format(L)]
     dz = A2 - Y
@@ -25,4 +25,3 @@ def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
             i)] - (alpha * db)
         weights["W{}".format(i)] = weights["W{}".format(
             i)] - (alpha * dw).T
-        
