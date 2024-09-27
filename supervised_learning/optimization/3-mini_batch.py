@@ -4,10 +4,8 @@ Defines function that trains a loaded neural network model
 using mini-batch gradient descent
 """
 
-
 import tensorflow as tf
 shuffle_data = __import__('2-shuffle_data').shuffle_data
-
 
 def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                      epochs=5, load_path="/tmp/model.ckpt",
@@ -81,7 +79,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
             if epoch == epochs:
                 break
             X_train_s, Y_train_s = shuffle_data(X_train, Y_train)
-            if (m % batch_size) is 0:
+            if (m % batch_size) == 0:
                 mini_batch_total = m // batch_size
             else:
                 mini_batch_total = (m // batch_size) + 1
@@ -95,7 +93,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                 sess.run(train_op, feed_dict={x: X_train_s[low:high, :],
                                               y: Y_train_s[low:high, :]})
                 step_number += 1
-                if (step_number % 100) is 0:
+                if (step_number % 100) == 0:
                     print("\tStep {}:".format(step_number))
                     step_cost = sess.run(
                         loss,
@@ -107,5 +105,4 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                         feed_dict={x: X_train_s[low:high, :],
                                    y: Y_train_s[low:high, :]})
                     print("\t\tAccuracy: {}".format(step_accuracy))
-        return (saver.save(sess, save_path))
-    
+        return saver.save(sess, save_path)
