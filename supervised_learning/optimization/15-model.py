@@ -247,7 +247,6 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001,
                         print("\tStep {}:".format(b + 1))
                         print("\t\tCost: {}".format(loss_mini_batch))
                         print("\t\tAccuracy: {}".format(acc_mini_batch))
-
             # Update of global step variable for each iteration
             sess.run(tf.assign(global_step, global_step + 1))
         return saver.save(sess, save_path)
