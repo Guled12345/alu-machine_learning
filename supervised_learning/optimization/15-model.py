@@ -1,8 +1,7 @@
-
 #!/usr/bin/env python3
-"""Script to train a model with a multiple-object
-    optimization theory
-"""
+# """Script to train a model with a multiple-object
+# optimization theory
+# """
 
 
 import numpy as np
@@ -185,7 +184,7 @@ def model(
     epochs=5,
     save_path="/tmp/model.ckpt",
 ):
-    """
+    """ 
 
     Args:
         Data_train: tuple containing the training inputs and
@@ -277,12 +276,7 @@ def model(
                     feed_mini = {x: x_minbatch, y: y_minbatch}
                     sess.run(train_op, feed_dict=feed_mini)
 
-                    if ((step_number + 1) % 100 == 0) and (step_number != 0):
-                        step_cost = sess.run(loss, feed_dict=feed_mini)
-                        step_accuracy = sess.run(accuracy, feed_dict=feed_mini)
-                        print("\tStep {}:".format(step_number + 1))
-                        print("\t\tCost: {}".format(step_cost))
-                        print("\t\tAccuracy: {}".format(step_accuracy))
-            sess.run(tf.assign(global_step, global_step + 1))
-            save_path = saver.save(sess, save_path)
+                sess.run(tf.assign(global_step, global_step + 1))
+
+        save_path = saver.save(sess, save_path)
     return save_path
