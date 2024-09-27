@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """Script to train a model with a multiple-object
     optimization theory
