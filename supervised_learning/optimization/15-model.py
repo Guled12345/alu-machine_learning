@@ -216,25 +216,40 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001,
             cost_train = sess.run(loss, feed_dict={x: X_train, y: Y_train})
             accuracy_train = sess.run(accuracy,
                                       feed_dict={x: X_train, y: Y_train})
-            cost_valid = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
-            accuracy_valid = sess.run(accuracy,
-                                      feed_dict={x: X_valid, y: Y_valid})
+            cost_val = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
+            accuracy_val = sess.run(accuracy,
+                                    feed_dict={x: X_valid, y: Y_valid})
             print("After {} epochs:".format(i))
             print("\tTraining Cost: {}".format(cost_train))
             print("\tTraining Accuracy: {}".format(accuracy_train))
-            print("\tValidation Cost: {}".format(cost_valid))
-            print("\tValidation Accuracy: {}".format(accuracy_valid))
+            print("\tValidation Cost: {}".format(cost_val))
+            print("\tValidation Accuracy: {}".format(accuracy_val))
 
             if i < epochs:
-                X_shuffled, Y_shuffled = shuffle_data(X_train, Y_train)
-                for j in range(n_batches):
-                    start = j * batch_size
-                    end = (j + 1) * batch_size
+                shuffled_X, shuffled_Y = shuffle_data(X_train, Y_train)
+
+                # mini batches
+                for b in range(n_batches):
+                    start = b * batch_size
+                    end = (b + 1) * batch_size
                     if end > m:
                         end = m
-                    sess.run(train_op,
-                             feed_dict={x: X_shuffled[start:end],
-                                        y: Y_shuffled[start:end]})
+                    X_mini_batch = shuffled_X[start:end]
+                    Y_mini_batch = shuffled_Y[start:end]
+
+                    next_train = {x: X_mini_batch, y: Y_mini_batch}
+                    sess.run(train_op, feed_dict=next_train)
+
+                    if (b + 1) % 100 == 0 and b != 0:
+                        loss_mini_batch = sess.run(loss, feed_dict=next_train)
+                        acc_mini_batch = sess.run(accuracy,
+                                                  feed_dict=next_train)
+                        print("\tStep {}:".format(b + 1))
+                        print("\t\tCost: {}".format(loss_mini_batch))
+                        print("\t\tAccuracy: {}".format(acc_mini_batch))
+
+            # Update of global step variable for each iteration
             sess.run(tf.assign(global_step, global_step + 1))
 
         return saver.save(sess, save_path)
+    
