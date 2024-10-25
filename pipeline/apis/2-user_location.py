@@ -1,24 +1,40 @@
 #!/usr/bin/env python3
-"""using the GitHub API, write a script that prints
-the location of a specific users"""
+"""
+Using the GitHub API, this script prints the location
+of a specific user.
+"""
 
 import requests
 import sys
 import time
 
 if __name__ == "__main__":
-    res = requests.get(sys.argv[1])
+    if len(sys.argv) < 2:
+        print("Usage: ./script.py <GitHub username>")
+        sys.exit(1)
 
-    if res.status_code == 403:
-        rate_limit = int(res.headers.get('X-Ratelimit-Reset'))
-        current_time = int(time.time())
-        diff = (rate_limit - current_time) // 60
-        print("Reset in {} min".format(diff))
-        # get remaining rate
+    username = sys.argv[1]
+    url = f"https://api.github.com/users/{username}"
 
-    elif res.status_code == 404:
-        print("Not found")
-    elif res.status_code == 200:
-        res = res.json()
-        print(res['location'])
-        
+    try:
+        res = requests.get(url)
+
+        if res.status_code == 403:
+            rate_limit = int(res.headers.get('X-RateLimit-Reset', 0))
+            current_time = int(time.time())
+            diff = (rate_limit - current_time) // 60
+            print(f"Rate limit exceeded. Try again in {diff} min.")
+
+        elif res.status_code == 404:
+            print("User not found.")
+
+        elif res.status_code == 200:
+            data = res.json()
+            location = data.get('location', 'Location not available')
+            print(f"Location: {location}")
+
+        else:
+            print(f"Error: Received unexpected status code {res.status_code}")
+
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
