@@ -1,40 +1,48 @@
 #!/usr/bin/env python3
-"""
-    Script that displays the number of launches per rocket.
-"""
+'''
+Prints the location of a user
+'''
 
+
+import sys
 import requests
-from collections import Counter
+import time
 
 
-def get_launch_count_by_rocket():
+def get_user_location(api_url):
     """
-    Get all launches and count them per rocket.
+    Fetch and print the location of a GitHub user.
+
+    :param api_url: The API URL for the user
     """
-    url = "https://api.spacexdata.com/v4/launches"
-    response = requests.get(url)
-    launches = response.json()
+    try:
+        response = requests.get(api_url)
 
-    # Count the launches per rocket ID
-    rocket_counts = Counter(launch["rocket"] for launch in launches)
+        if response.status_code == 200:
+            user_data = response.json()
+            location = user_data.get('location')
+            if location:
+                print(location)
+            else:
+                print('Location not available')
+        elif response.status_code == 404:
+            print('Not found')
+        elif response.status_code == 403:
+            reset_time = int(
+                response.headers.get('X-RateLimit-Reset', time.time()))
+            current_time = int(time.time())
+            wait_time = (reset_time - current_time) // 60
+            print('Reset in {} min'.format(wait_time))
+        else:
+            print('Error: {}'.format(response.status_code))
+    except requests.RequestException as e:
+        print('An error occurred: {}'.format(e))
 
-    # Get rocket names
-    url = "https://api.spacexdata.com/v4/rockets"
-    response = requests.get(url)
-    rockets = response.json()
-    rocket_names = {rocket["id"]: rocket["name"] for rocket in rockets}
 
-    # Create a list of (rocket_name, count) and sort it
-    rocket_launch_counts = [
-        (rocket_names[rocket_id], count)
-        for rocket_id, count in rocket_counts.items()
-    ]
-    rocket_launch_counts.sort(key=lambda x: (-x[1], x[0]))
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print('Usage: ./2-user_location.py <api_url>')
+        sys.exit(1)
 
-    return rocket_launch_counts
-
-
-if __name__ == "__main__":
-    rocket_launch_counts = get_launch_count_by_rocket()
-    for rocket_name, count in rocket_launch_counts:
-        print("{}: {}".format(rocket_name, count))
+    api_url = sys.argv[1]
+    get_user_location(api_url)
