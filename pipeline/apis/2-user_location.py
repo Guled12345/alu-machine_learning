@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-
-
 """using the GitHub API, write a script that prints
 the location of a specific users"""
 
 import requests
 import sys
 import time
-
 
 if __name__ == "__main__":
     res = requests.get(sys.argv[1])
