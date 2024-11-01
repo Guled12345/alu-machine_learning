@@ -38,4 +38,7 @@ if __name__ == "__main__":
     rocket_launch_counts = get_launch_count_by_rocket()
     for rocket_name, count in rocket_launch_counts:
         print("{}: {}".format(rocket_name, count))
+<<<<<<< HEAD
    
+=======
+>>>>>>> 5fb9b2c2ef78f0a888fafdbb74e4758b6676fd55
