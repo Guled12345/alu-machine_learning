@@ -22,7 +22,7 @@ def load_model(self):
     for layer in vgg.layers:
         if layer.name in self.style_layers:
             style_outputs.append(layer.output)
-        if layer.name == self.content_layer:
+        if layer.name in self.content_layer:
             content_output = layer.output
 
         layer.trainable = False
