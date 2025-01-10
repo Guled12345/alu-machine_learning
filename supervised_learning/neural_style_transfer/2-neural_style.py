@@ -124,7 +124,7 @@ class NST:
                                           size=(h_new, w_new))
         rescaled = resized / 255
         rescaled = tf.clip_by_value(rescaled, 0, 1)
-        return (rescaled)
+        return rescaled
 
     def load_model(self):
         """
@@ -150,7 +150,7 @@ class NST:
         for layer in vgg.layers:
             if layer.name in self.style_layers:
                 style_outputs.append(layer.output)
-            if layer.name in self.content_layer:
+            if layer.name == self.content_layer:
                 content_output = layer.output
 
             layer.trainable = False
@@ -175,7 +175,7 @@ class NST:
         """
         if not isinstance(input_layer, (tf.Tensor, tf.Variable)):
             raise TypeError("input_layer must be a tensor of rank 4")
-        if len(input_layer.shape) is not 4:
+        if len(input_layer.shape) != 4:
             raise TypeError("input_layer must be a tensor of rank 4")
         _, h, w, c = input_layer.shape
         product = int(h * w)
@@ -183,5 +183,4 @@ class NST:
         gram = tf.matmul(features, features, transpose_a=True)
         gram = tf.expand_dims(gram, axis=0)
         gram /= tf.cast(product, tf.float32)
-        return (gram)
-    
+        return gram
