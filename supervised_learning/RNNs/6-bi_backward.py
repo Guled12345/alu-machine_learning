@@ -88,4 +88,3 @@ class BidirectionalCell:
         h_prev = np.tanh(np.matmul(h_x, self.Whb) + self.bhb)
 
         return h_prev
-    
