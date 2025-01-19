@@ -3,7 +3,6 @@
 Defines the class BidirectionalCell that represents a bidirectional RNN cell
 """
 
-
 import numpy as np
 
 
@@ -128,4 +127,3 @@ class BidirectionalCell:
             Y.append(y)
 
         return np.array(Y)
-    
